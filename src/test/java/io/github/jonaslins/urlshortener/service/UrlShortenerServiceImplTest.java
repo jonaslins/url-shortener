@@ -1,6 +1,7 @@
 package io.github.jonaslins.urlshortener.service;
 
 import io.github.jonaslins.urlshortener.exception.ResourceNotFound;
+import io.github.jonaslins.urlshortener.model.RequestInfo;
 import io.github.jonaslins.urlshortener.model.UrlShorten;
 import io.github.jonaslins.urlshortener.repository.UrlShortenRepository;
 import org.junit.Test;
@@ -31,12 +32,13 @@ public class UrlShortenerServiceImplTest {
     public void shouldGetOriginalUrlByCode() {
         String originalUrl = "https://www.linkedin.com/in/jonaslins/";
         String code = "kLPc8a";
+        RequestInfo requestInfo = new RequestInfo();
 
         UrlShorten urlShorten = new UrlShorten(originalUrl);
 
         given(repository.findAndModifyByCode(code)).willReturn(Optional.of(urlShorten));
 
-        String originalUrlByCode = service.getOriginalUrlByCode(code);
+        String originalUrlByCode = service.getOriginalUrlByCode(code, requestInfo);
 
         assertThat(originalUrlByCode).isEqualTo("https://www.linkedin.com/in/jonaslins/");
     }
@@ -45,12 +47,13 @@ public class UrlShortenerServiceImplTest {
     public void shouldThrowResourceNotFoundOnGetOriginalUrlByCode() {
         String originalUrl = "https://www.linkedin.com/in/jonaslins/";
         String code = "kLPc8a";
+        RequestInfo requestInfo = new RequestInfo();
 
         UrlShorten urlShorten = new UrlShorten(originalUrl);
 
         given(repository.findAndModifyByCode(code)).willReturn(Optional.empty());
 
-        String originalUrlByCode = service.getOriginalUrlByCode(code);
+        String originalUrlByCode = service.getOriginalUrlByCode(code, requestInfo);
 
     }
 }

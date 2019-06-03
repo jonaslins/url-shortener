@@ -1,6 +1,7 @@
 package io.github.jonaslins.urlshortener.controller;
 
 import io.github.jonaslins.urlshortener.controller.request.ShortenUrlRequest;
+import io.github.jonaslins.urlshortener.model.RequestInfo;
 import io.github.jonaslins.urlshortener.model.UrlShorten;
 import io.github.jonaslins.urlshortener.model.UrlShortenStatistics;
 import io.github.jonaslins.urlshortener.service.UrlShortenerService;
@@ -15,6 +16,8 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -56,7 +59,7 @@ public class UrlShortenerControllerTest {
         String code = "kLPc8a";
         String originalUrl = "https://www.linkedin.com/in/jonaslins/";
 
-        given(service.getOriginalUrlByCode(code)).willReturn(originalUrl);
+        given(service.getOriginalUrlByCode(eq(code), any(RequestInfo.class))).willReturn(originalUrl);
 
         mvc.perform(get("/" + code)
                 .accept(MediaType.APPLICATION_JSON))

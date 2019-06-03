@@ -1,6 +1,7 @@
 package io.github.jonaslins.urlshortener.service;
 
 import io.github.jonaslins.urlshortener.exception.ResourceNotFound;
+import io.github.jonaslins.urlshortener.model.RequestInfo;
 import io.github.jonaslins.urlshortener.model.UrlShorten;
 import io.github.jonaslins.urlshortener.model.UrlShortenStatistics;
 import io.github.jonaslins.urlshortener.repository.UrlShortenRepository;
@@ -20,7 +21,7 @@ public class UrlShortenerServiceImpl implements UrlShortenerService {
         return savedUrlShorten;
     }
 
-    public String getOriginalUrlByCode(String code) {
+    public String getOriginalUrlByCode(String code, RequestInfo requestInfo) {
         UrlShorten urlShorten = urlShortenRepository.findAndModifyByCode(code)
                 .orElseThrow(ResourceNotFound::new);
         return urlShorten.getOriginalUrl();
