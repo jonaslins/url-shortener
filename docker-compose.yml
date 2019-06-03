@@ -1,0 +1,20 @@
+version: '3'
+services:
+  
+  url-shortener:
+    build: .
+    image: url-shortener
+    ports:
+      - "8080:8080"
+    depends_on:
+      - "mongodb"
+      
+  mongodb:
+    image: mongo:4.0
+    restart: always
+    #volumes:
+    #  - ./data:/data
+    command: mongod --smallfiles
+    ports:
+      - "27017:27017"
+      - "3000:3000"
