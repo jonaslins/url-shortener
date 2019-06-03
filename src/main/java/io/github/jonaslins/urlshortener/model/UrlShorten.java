@@ -1,11 +1,23 @@
 package io.github.jonaslins.urlshortener.model;
 
 import io.github.jonaslins.urlshortener.util.RandomShortCodeGenerator;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.time.LocalDateTime;
+
+@Document("url_shorten")
 public class UrlShorten {
 
-    private String originalUrl;
+    @Id
+    private String id;
+    @Indexed(unique = true)
     private String code;
+    private String originalUrl;
+    @CreatedDate
+    private LocalDateTime createdAt;
     private Long hitCount;
 
     public UrlShorten(String originalUrl) {
@@ -26,4 +38,11 @@ public class UrlShorten {
         return hitCount;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
 }
