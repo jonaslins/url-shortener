@@ -20,7 +20,7 @@ public class UrlShortenerServiceImpl implements UrlShortenerService {
     }
 
     public String getOriginalUrlByCode(String code) {
-        UrlShorten urlShorten = urlShortenRepository.findByCode(code)
+        UrlShorten urlShorten = urlShortenRepository.findAndModifyByCode(code)
                 .orElseThrow(ResourceNotFound::new);
         return urlShorten.getOriginalUrl();
     }

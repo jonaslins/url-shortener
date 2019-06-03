@@ -34,7 +34,7 @@ public class UrlShortenerServiceImplTest {
 
         UrlShorten urlShorten = new UrlShorten(originalUrl);
 
-        given(repository.findByCode(code)).willReturn(Optional.of(urlShorten));
+        given(repository.findAndModifyByCode(code)).willReturn(Optional.of(urlShorten));
 
         String originalUrlByCode = service.getOriginalUrlByCode(code);
 
@@ -48,7 +48,7 @@ public class UrlShortenerServiceImplTest {
 
         UrlShorten urlShorten = new UrlShorten(originalUrl);
 
-        given(repository.findByCode(code)).willReturn(Optional.ofNullable(null));
+        given(repository.findAndModifyByCode(code)).willReturn(Optional.empty());
 
         String originalUrlByCode = service.getOriginalUrlByCode(code);
 
