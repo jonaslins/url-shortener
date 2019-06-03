@@ -28,7 +28,7 @@ public class UrlShortenerServiceImpl implements UrlShortenerService {
 
     @Override
     public UrlShortenStatistics getStatisticsByCode(String code) {
-        return null;
+        return urlShortenRepository.getStatisticsByCode(code);
     }
 
 }
