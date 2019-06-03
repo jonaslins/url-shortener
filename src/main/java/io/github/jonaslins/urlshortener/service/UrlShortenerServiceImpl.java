@@ -2,6 +2,7 @@ package io.github.jonaslins.urlshortener.service;
 
 import io.github.jonaslins.urlshortener.exception.ResourceNotFound;
 import io.github.jonaslins.urlshortener.model.UrlShorten;
+import io.github.jonaslins.urlshortener.model.UrlShortenStatistics;
 import io.github.jonaslins.urlshortener.repository.UrlShortenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,4 +25,10 @@ public class UrlShortenerServiceImpl implements UrlShortenerService {
                 .orElseThrow(ResourceNotFound::new);
         return urlShorten.getOriginalUrl();
     }
+
+    @Override
+    public UrlShortenStatistics getStatisticsByCode(String code) {
+        return null;
+    }
+
 }

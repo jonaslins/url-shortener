@@ -2,6 +2,7 @@ package io.github.jonaslins.urlshortener.controller;
 
 import io.github.jonaslins.urlshortener.controller.request.ShortenUrlRequest;
 import io.github.jonaslins.urlshortener.model.UrlShorten;
+import io.github.jonaslins.urlshortener.model.UrlShortenStatistics;
 import io.github.jonaslins.urlshortener.service.UrlShortenerService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -61,6 +62,25 @@ public class UrlShortenerControllerTest {
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(redirectedUrl("https://www.linkedin.com/in/jonaslins/"))
                 .andExpect(status().isFound());
+    }
+
+    @Test
+    public void getStatistics() throws Exception {
+        String code = "kLPc8a";
+        String originalUrl = "https://www.linkedin.com/in/jonaslins/";
+
+        UrlShortenStatistics urlShortenStatistics = new UrlShortenStatistics();
+        urlShortenStatistics.setHitCount(5l);
+        urlShortenStatistics.setOriginalUrl(originalUrl);
+
+        given(service.getStatisticsByCode(code)).willReturn(urlShortenStatistics);
+
+        mvc.perform(get("/" + code + "/statistics")
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", notNullValue()))
+                .andExpect(jsonPath("$.hitCount", is(5)))
+                .andExpect(jsonPath("$.originalUrl", is("https://www.linkedin.com/in/jonaslins/")));
     }
 
 }
