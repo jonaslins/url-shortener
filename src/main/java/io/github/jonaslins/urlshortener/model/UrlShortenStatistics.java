@@ -4,6 +4,7 @@ public class UrlShortenStatistics {
 
     private String originalUrl;
     private Long hitCount;
+    private Long topUserAddress;
 
     public UrlShortenStatistics() {
     }
@@ -22,5 +23,13 @@ public class UrlShortenStatistics {
 
     public void setHitCount(Long hitCount) {
         this.hitCount = hitCount;
+    }
+
+    public Long getTopUserAddress() {
+        return topUserAddress;
+    }
+
+    public void setTopUserAddress(Long topUserAddress) {
+        this.topUserAddress = topUserAddress;
     }
 }

@@ -1,15 +1,10 @@
 package io.github.jonaslins.urlshortener.util;
 
-import com.blueconic.browscap.Capabilities;
-import com.blueconic.browscap.ParseException;
-import com.blueconic.browscap.UserAgentParser;
-import com.blueconic.browscap.UserAgentService;
 import io.github.jonaslins.urlshortener.model.RequestInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
 
 public class RequestInfoExtractor {
 
@@ -25,7 +20,8 @@ public class RequestInfoExtractor {
         requestInfo.setOriginalUserAgent(userAgent);
         requestInfo.setIPAddress(remoteAddr);
 
-        if(userAgent!=null && !userAgent.isEmpty()){
+      /*  TODO too slow, investigating why
+       if(userAgent!=null && !userAgent.isEmpty()){
             try {
                 UserAgentParser parser = new UserAgentService().loadParser();
                 Capabilities capabilities = parser.parse(userAgent);
@@ -40,7 +36,7 @@ public class RequestInfoExtractor {
                 log.warn("Error while extracting request");
             }
         }
-
+*/
         return requestInfo;
     }
 }
