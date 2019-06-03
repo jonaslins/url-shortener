@@ -15,9 +15,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.mockito.BDDMockito.given;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static sun.plugin2.util.PojoUtil.toJson;
 
 
@@ -48,6 +48,19 @@ public class UrlShortenerControllerTest {
                 .andExpect(jsonPath("$", notNullValue()))
                 .andExpect(jsonPath("$.code", notNullValue()))
                 .andExpect(jsonPath("$.originalUrl", is("https://www.linkedin.com/in/jonaslins/")));
+    }
+
+    @Test
+    public void redirectToOriginalUrl() throws Exception {
+        String code = "kLPc8a";
+        String originalUrl = "https://www.linkedin.com/in/jonaslins/";
+
+        given(service.getOriginalUrlByCode(code)).willReturn(originalUrl);
+
+        mvc.perform(get("/" + code)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(redirectedUrl("https://www.linkedin.com/in/jonaslins/"))
+                .andExpect(status().isMovedPermanently());
     }
 
 }

@@ -6,4 +6,5 @@ public interface UrlShortenerService {
 
     UrlShorten shortenUrl(String s);
 
+    String getOriginalUrlByCode(String code);
 }
