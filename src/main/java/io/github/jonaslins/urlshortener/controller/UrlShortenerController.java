@@ -29,6 +29,6 @@ public class UrlShortenerController {
     @GetMapping("/{code}")
     public ResponseEntity redirectToOriginalUrl(@PathVariable String code, HttpServletResponse response) throws IOException {
         String originalUrl = urlShortenerService.getOriginalUrlByCode(code);
-        return ResponseEntity.status(HttpStatus.MOVED_PERMANENTLY).header(HttpHeaders.LOCATION, originalUrl).build();
+        return ResponseEntity.status(HttpStatus.FOUND).header(HttpHeaders.LOCATION, originalUrl).build();
     }
 }

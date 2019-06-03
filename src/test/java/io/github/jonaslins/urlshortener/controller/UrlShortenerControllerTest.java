@@ -60,7 +60,7 @@ public class UrlShortenerControllerTest {
         mvc.perform(get("/" + code)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(redirectedUrl("https://www.linkedin.com/in/jonaslins/"))
-                .andExpect(status().isMovedPermanently());
+                .andExpect(status().isFound());
     }
 
 }
