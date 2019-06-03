@@ -1,6 +1,6 @@
 package io.github.jonaslins.urlshortener.model;
 
-import org.apache.commons.lang3.RandomStringUtils;
+import io.github.jonaslins.urlshortener.util.RandomShortCodeGenerator;
 
 public class UrlShorten {
 
@@ -10,7 +10,7 @@ public class UrlShorten {
 
     public UrlShorten(String originalUrl) {
         this.originalUrl = originalUrl;
-        this.code = generateCode();
+        this.code = RandomShortCodeGenerator.generateCode();
         this.hitCount = 0l;
     }
 
@@ -24,10 +24,6 @@ public class UrlShorten {
 
     public Long getHitCount() {
         return hitCount;
-    }
-
-    private String generateCode(){
-      return RandomStringUtils.randomAlphanumeric(7);
     }
 
 }
