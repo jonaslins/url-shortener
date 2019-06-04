@@ -7,6 +7,8 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Document("url_shorten")
 public class UrlShorten {
@@ -19,6 +21,7 @@ public class UrlShorten {
     @CreatedDate
     private LocalDateTime createdAt;
     private Long hitCount;
+    private List<RequestInfo> requests = new ArrayList<>();
 
     public UrlShorten(String originalUrl) {
         this.originalUrl = originalUrl;
@@ -44,5 +47,9 @@ public class UrlShorten {
 
     public LocalDateTime getCreatedAt() {
         return createdAt;
+    }
+
+    public List<RequestInfo> getRequests() {
+        return requests;
     }
 }

@@ -1,5 +1,7 @@
 package io.github.jonaslins.urlshortener.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.jonaslins.urlshortener.controller.request.ShortenUrlRequest;
 import io.github.jonaslins.urlshortener.model.RequestInfo;
 import io.github.jonaslins.urlshortener.model.UrlShorten;
@@ -22,7 +24,6 @@ import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static sun.plugin2.util.PojoUtil.toJson;
 
 
 @RunWith(SpringRunner.class)
@@ -45,6 +46,7 @@ public class UrlShortenerControllerTest {
 
         ShortenUrlRequest shortenUrlRequest = new ShortenUrlRequest(originalUrl);
 
+
         mvc.perform(post("/")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(toJson(shortenUrlRequest)))
@@ -53,6 +55,12 @@ public class UrlShortenerControllerTest {
                 .andExpect(jsonPath("$.code", notNullValue()))
                 .andExpect(jsonPath("$.originalUrl", is("https://www.linkedin.com/in/jonaslins/")));
     }
+
+    private String toJson(Object object) throws JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.writeValueAsString(object);
+    }
+
 
     @Test
     public void redirectToOriginalUrl() throws Exception {
