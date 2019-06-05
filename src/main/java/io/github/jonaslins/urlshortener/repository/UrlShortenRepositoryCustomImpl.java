@@ -1,6 +1,5 @@
 package io.github.jonaslins.urlshortener.repository;
 
-import com.mongodb.BasicDBObject;
 import io.github.jonaslins.urlshortener.model.RequestInfo;
 import io.github.jonaslins.urlshortener.model.UrlShorten;
 import io.github.jonaslins.urlshortener.model.UrlShortenStatistics;
@@ -31,23 +30,19 @@ public class UrlShortenRepositoryCustomImpl implements UrlShortenRepositoryCusto
         return Optional.of(returned);
     }
 
-    public Optional<UrlShortenStatistics> getUrlShortenStatistics(String code) {
+    public UrlShortenStatistics getStatisticsByCode(String code) {
         Aggregation agg = newAggregation(
                 match(where("code").is(code)), //
                 unwind("requests"),
-                group("requests.IPAddress").count().as("count").push(
-                        new BasicDBObject("originalUrl", "$originalUrl")
-                                .append("hitCount", "hitCount")
-                                .append("topUserAddress", "$requests.IPAddress")).as("test"),
-                sort(Sort.Direction.DESC, "test"),
-                out("test")
-
+                group(fields("code").and("hitCount").and("originalUrl").and("topUserAddress", "requests.IPAddress")).count().as("count")
+                ,sort(Sort.Direction.DESC, "count")
         );
 
-        AggregationResults<UrlShortenStatistics> results = mongoTemplate.aggregate(
+        AggregationResults<UrlShortenStatistics> aggregationResults = mongoTemplate.aggregate(
                 agg, UrlShorten.class, UrlShortenStatistics.class
         );
-        List<UrlShortenStatistics> intCount = results.getMappedResults();
-        return Optional.of(intCount.get(0));
+        List<UrlShortenStatistics> results = aggregationResults.getMappedResults();
+
+        return results.get(0);
     }
 }
