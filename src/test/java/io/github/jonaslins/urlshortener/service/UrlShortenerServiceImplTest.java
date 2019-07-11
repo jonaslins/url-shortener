@@ -3,6 +3,7 @@ package io.github.jonaslins.urlshortener.service;
 import io.github.jonaslins.urlshortener.exception.ResourceNotFound;
 import io.github.jonaslins.urlshortener.model.RequestInfo;
 import io.github.jonaslins.urlshortener.model.UrlShorten;
+import io.github.jonaslins.urlshortener.model.UrlShortenStatistics;
 import io.github.jonaslins.urlshortener.repository.UrlShortenRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -54,6 +55,19 @@ public class UrlShortenerServiceImplTest {
         given(repository.findAndModifyByCode(code, requestInfo)).willReturn(Optional.empty());
 
         String originalUrlByCode = service.getOriginalUrlByCode(code, requestInfo);
+
+    }
+
+    @Test(expected = ResourceNotFound.class)
+    public void shouldThrowResourceNotFoundOnGetStatisticsByCode() {
+        String originalUrl = "https://www.linkedin.com/in/jonaslins/";
+        String code = "kLPc8a";
+
+        UrlShorten urlShorten = new UrlShorten(originalUrl);
+
+        given(repository.getStatisticsByCode(code)).willReturn(Optional.empty());
+
+        UrlShortenStatistics statisticsByCode = service.getStatisticsByCode(code);
 
     }
 }
