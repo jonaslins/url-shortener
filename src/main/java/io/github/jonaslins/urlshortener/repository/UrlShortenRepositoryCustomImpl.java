@@ -30,7 +30,7 @@ public class UrlShortenRepositoryCustomImpl implements UrlShortenRepositoryCusto
         return Optional.of(returned);
     }
 
-    public UrlShortenStatistics getStatisticsByCode(String code) {
+    public Optional<UrlShortenStatistics> getStatisticsByCode(String code) {
         Aggregation agg = newAggregation(
                 match(where("code").is(code)), //
                 unwind("requests"),
@@ -43,6 +43,9 @@ public class UrlShortenRepositoryCustomImpl implements UrlShortenRepositoryCusto
         );
         List<UrlShortenStatistics> results = aggregationResults.getMappedResults();
 
-        return results.get(0);
+        if(results.isEmpty()){
+            return Optional.empty();
+        }
+        return Optional.of(results.get(0));
     }
 }

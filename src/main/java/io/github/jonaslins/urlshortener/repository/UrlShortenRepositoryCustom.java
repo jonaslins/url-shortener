@@ -10,5 +10,5 @@ public interface UrlShortenRepositoryCustom {
 
     Optional<UrlShorten> findAndModifyByCode(String code, RequestInfo requestInfo);
 
-    UrlShortenStatistics getStatisticsByCode(String code);
+    Optional<UrlShortenStatistics> getStatisticsByCode(String code);
 }
