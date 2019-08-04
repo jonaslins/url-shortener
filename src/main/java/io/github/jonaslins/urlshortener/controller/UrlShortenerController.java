@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 @RequestMapping
@@ -41,5 +42,10 @@ public class UrlShortenerController {
     @GetMapping("/{code}/statistics")
     public UrlShortenStatistics getStatistics(@PathVariable String code){
         return urlShortenerService.getStatisticsByCode(code);
+    }
+
+    @GetMapping("/")
+    public List<UrlShorten> getAll() {
+       return this.urlShortenerService.getAll();
     }
 }
