@@ -1,1 +1,22 @@
-<p>create-short-url works!</p>
+<h3>Shorten Url</h3>
+<div [hidden]="submitted" style="width: 400px;">
+    <form (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <label for="name">Paste the URL to be shortened</label>
+            <input type="text" class="form-control" id="originalUrl" required [(ngModel)]="shortUrl.originalUrl"
+                name="originalUrl">
+        </div>
+        <button type="submit" class="btn btn-success">Shorten URL</button>
+    </form>
+</div>
+
+<div [hidden]="!submitted">
+    <div>
+        <label><b>Code: </b></label> {{shortUrl.code}}
+    </div>
+    <div>
+        <label><b>Original Url: </b></label> {{shortUrl.originalUrl}}
+    </div>
+    <button (click)="goToList()" class="btn btn-info">Go to list</button>
+
+</div>

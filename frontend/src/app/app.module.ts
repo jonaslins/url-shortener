@@ -7,6 +7,7 @@ import { CreateShortUrlComponent } from './create-short-url/create-short-url.com
 import { ShortUrlDetailsComponent } from './short-url-details/short-url-details.component';
 import { ShortUrlListComponent } from './short-url-list/short-url-list.component';
 import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { HttpClientModule } from '@angular/common/http';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
