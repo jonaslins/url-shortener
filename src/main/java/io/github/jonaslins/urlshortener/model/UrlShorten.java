@@ -13,10 +13,13 @@ import java.util.List;
 @Document("url_shorten")
 public class UrlShorten {
 
+    private static final String BASE_URL = "http://localhost:8080/";
+
     @Id
     private String id;
     @Indexed(unique = true)
     private String code;
+    private String shortLink;
     private String originalUrl;
     @CreatedDate
     private LocalDateTime createdAt;
@@ -26,6 +29,7 @@ public class UrlShorten {
     public UrlShorten(String originalUrl) {
         this.originalUrl = originalUrl;
         this.code = RandomShortCodeGenerator.generateCode();
+        this.shortLink = BASE_URL + code;
         this.hitCount = 0l;
     }
 
@@ -51,5 +55,9 @@ public class UrlShorten {
 
     public List<RequestInfo> getRequests() {
         return requests;
+    }
+
+    public String getShortLink() {
+        return shortLink;
     }
 }

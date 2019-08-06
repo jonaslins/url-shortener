@@ -3,6 +3,8 @@ package io.github.jonaslins.urlshortener.model;
 public class UrlShortenStatistics {
 
     private String originalUrl;
+    private String shortLink;
+    private String code;
     private Long hitCount;
     private String topUserAddress;
 
@@ -31,5 +33,13 @@ public class UrlShortenStatistics {
 
     public void setTopUserAddress(String topUserAddress) {
         this.topUserAddress = topUserAddress;
+    }
+
+    public String getShortLink() {
+        return shortLink;
+    }
+
+    public String getCode() {
+        return code;
     }
 }
