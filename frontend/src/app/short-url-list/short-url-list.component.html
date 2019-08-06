@@ -14,10 +14,9 @@
       </thead>
       <tbody>
         <tr *ngFor="let shortUrl of shortUrls | async">
-          <td><a href="http://localhost:8080/{{shortUrl.code}}"
-              target="_blank">http://localhost:8080/{{shortUrl.code}}</a></td>
+          <td><a href="{{ shortUrl.shortLink }}" target="_blank">{{ shortUrl.shortLink }}</a></td>
           <td>{{shortUrl.code}}</td>
-          <td>{{shortUrl.originalUrl}}</td>
+          <td><a href="{{ shortUrl.originalUrl }}" target="_blank">{{ shortUrl.originalUrl }}</a></td>
           <td>
             <button (click)="shortUrlDetails(shortUrl.code)" class="btn btn-info">Details</button>
           </td>
