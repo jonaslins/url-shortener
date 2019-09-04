@@ -1,0 +1,27 @@
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h2>Your list of shortened links</h2>
+  </div>
+  <div class="panel-body">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Short Link</th>
+          <th>Code</th>
+          <th>Original Url</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let shortUrl of shortUrls | async">
+          <td><a href="{{ shortUrl.shortLink }}" target="_blank">{{ shortUrl.shortLink }}</a></td>
+          <td>{{shortUrl.code}}</td>
+          <td><a href="{{ shortUrl.originalUrl }}" target="_blank">{{ shortUrl.originalUrl }}</a></td>
+          <td>
+            <button (click)="shortUrlDetails(shortUrl.code)" class="btn btn-info">Details</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -34,7 +34,11 @@ public class UrlShortenRepositoryCustomImpl implements UrlShortenRepositoryCusto
         Aggregation agg = newAggregation(
                 match(where("code").is(code)), //
                 unwind("requests"),
-                group(fields("code").and("hitCount").and("originalUrl").and("topUserAddress", "requests.IPAddress")).count().as("count")
+                group(fields("code")
+                        .and("shortLink")
+                        .and("hitCount")
+                        .and("originalUrl")
+                        .and("topUserAddress", "requests.IPAddress")).count().as("count")
                 ,sort(Sort.Direction.DESC, "count")
         );
 

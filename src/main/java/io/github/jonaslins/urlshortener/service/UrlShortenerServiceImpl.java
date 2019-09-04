@@ -8,6 +8,8 @@ import io.github.jonaslins.urlshortener.repository.UrlShortenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UrlShortenerServiceImpl implements UrlShortenerService {
 
@@ -31,6 +33,11 @@ public class UrlShortenerServiceImpl implements UrlShortenerService {
     public UrlShortenStatistics getStatisticsByCode(String code) {
         return urlShortenRepository.getStatisticsByCode(code)
                 .orElseThrow(ResourceNotFound::new);
+    }
+
+    @Override
+    public List<UrlShorten> getAll() {
+        return this.urlShortenRepository.findAll();
     }
 
 }

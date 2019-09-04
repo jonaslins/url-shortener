@@ -1,0 +1,21 @@
+<h2>Short Url Details</h2>
+
+<hr />
+<div *ngIf="shortUrl">
+  <div>
+    <label><b>Short link: </b></label> <a href="{{ shortUrl.shortLink }}" target="_blank"> {{ shortUrl.shortLink }}</a>
+  </div>
+  <div>
+    <label><b>Code: </b></label> {{ shortUrl.code }}
+  </div>
+  <div>
+    <label><b>Original Url: </b></label> <a href="{{ shortUrl.originalUrl }}" target="_blank">
+      {{ shortUrl.originalUrl }}</a>
+  </div>
+  <div>
+    <label><b>Hit count: </b></label> {{ shortUrl.hitCount }}
+  </div>
+</div>
+
+<br>
+<br>
