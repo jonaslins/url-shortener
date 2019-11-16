@@ -49,9 +49,9 @@
             <version>1.8</version>
         </dependency>
 		<dependency>
-			<groupId>com.blueconic</groupId>
-			<artifactId>browscap-java</artifactId>
-			<version>1.2.13</version>
+			<groupId>nl.basjes.parse.useragent</groupId>
+			<artifactId>yauaa</artifactId>
+			<version>5.13</version>
 		</dependency>
 
 	</dependencies>

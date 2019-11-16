@@ -5,10 +5,15 @@ public class RequestInfo {
     private String IPAddress;
     private String referrer;
     private String originalUserAgent;
-    private String browser;
-    private String browserType;
-    private String deviceType;
-    private String platform;
+    private String agentClass;
+    private String agentName;
+    private String agentVersion;
+    private String operatingSystemClass;
+    private String operatingSystemName;
+    private String operatingSystemVersion;
+    private String deviceClass;
+    private String deviceName;
+    private String deviceBrand;
 
     public RequestInfo() {
     }
@@ -37,35 +42,75 @@ public class RequestInfo {
         this.originalUserAgent = originalUserAgent;
     }
 
-    public String getBrowser() {
-        return browser;
+    public void setAgentClass(String agentClass) {
+        this.agentClass = agentClass;
     }
 
-    public void setBrowser(String browser) {
-        this.browser = browser;
+    public String getAgentClass() {
+        return agentClass;
     }
 
-    public String getBrowserType() {
-        return browserType;
+    public void setAgentName(String agentName) {
+        this.agentName = agentName;
     }
 
-    public void setBrowserType(String browserType) {
-        this.browserType = browserType;
+    public String getAgentName() {
+        return agentName;
     }
 
-    public String getDeviceType() {
-        return deviceType;
+    public void setAgentVersion(String agentVersion) {
+        this.agentVersion = agentVersion;
     }
 
-    public void setDeviceType(String deviceType) {
-        this.deviceType = deviceType;
+    public String getAgentVersion() {
+        return agentVersion;
     }
 
-    public String getPlatform() {
-        return platform;
+    public void setOperatingSystemClass(String operatingSystemClass) {
+        this.operatingSystemClass = operatingSystemClass;
     }
 
-    public void setPlatform(String platform) {
-        this.platform = platform;
+    public String getOperatingSystemClass() {
+        return operatingSystemClass;
+    }
+
+    public void setOperatingSystemName(String operatingSystemName) {
+        this.operatingSystemName = operatingSystemName;
+    }
+
+    public String getOperatingSystemName() {
+        return operatingSystemName;
+    }
+
+    public void setOperatingSystemVersion(String operatingSystemVersion) {
+        this.operatingSystemVersion = operatingSystemVersion;
+    }
+
+    public String getOperatingSystemVersion() {
+        return operatingSystemVersion;
+    }
+
+    public String getDeviceClass() {
+        return deviceClass;
+    }
+
+    public void setDeviceClass(String deviceClass) {
+        this.deviceClass = deviceClass;
+    }
+
+    public void setDeviceName(String deviceName) {
+        this.deviceName = deviceName;
+    }
+
+    public String getDeviceName() {
+        return deviceName;
+    }
+
+    public void setDeviceBrand(String deviceBrand) {
+        this.deviceBrand = deviceBrand;
+    }
+
+    public String getDeviceBrand() {
+        return deviceBrand;
     }
 }

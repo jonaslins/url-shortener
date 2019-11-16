@@ -27,7 +27,7 @@ public class UrlShortenRepositoryCustomImpl implements UrlShortenRepositoryCusto
         Query query = new Query(where("code").is(code));
         Update update = new Update().inc("hitCount", 1).push("requests", requestInfo);
         UrlShorten returned = mongoTemplate.findAndModify(query, update, UrlShorten.class);
-        return Optional.of(returned);
+        return Optional.ofNullable(returned);
     }
 
     public Optional<UrlShortenStatistics> getStatisticsByCode(String code) {
