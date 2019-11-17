@@ -1,5 +1,6 @@
 package io.github.jonaslins.urlshortener.service;
 
+import io.github.jonaslins.urlshortener.event.OnShortUrlHitEvent;
 import io.github.jonaslins.urlshortener.exception.ResourceNotFound;
 import io.github.jonaslins.urlshortener.model.ShortUrl;
 import io.github.jonaslins.urlshortener.repository.ShortUrlRepository;
@@ -8,17 +9,23 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.context.ApplicationEventPublisher;
 
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UrlShortenerServiceTest {
 
     @Mock
     private ShortUrlRepository repository;
+    @Mock
+    private ApplicationEventPublisher eventPublisher;
 
     @InjectMocks
     private UrlShortenerService service;
@@ -42,14 +49,12 @@ public class UrlShortenerServiceTest {
                 "www.foo.bar");
 
         assertThat(originalUrlByCode).isEqualTo("https://www.linkedin.com/in/jonaslins/");
+        verify(eventPublisher, times(1)).publishEvent(any(OnShortUrlHitEvent.class));
     }
 
     @Test(expected = ResourceNotFound.class)
     public void shouldThrowResourceNotFoundOnGetOriginalUrlByCode() {
-        String originalUrl = "https://www.linkedin.com/in/jonaslins/";
         String code = "kLPc8a";
-
-        ShortUrl shortUrl = new ShortUrl(originalUrl);
 
         given(repository.findAndIncrementHitCount(code)).willReturn(Optional.empty());
 
@@ -62,10 +67,7 @@ public class UrlShortenerServiceTest {
 
     @Test(expected = ResourceNotFound.class)
     public void shouldThrowResourceNotFoundOnGetStatisticsByCode() {
-        String originalUrl = "https://www.linkedin.com/in/jonaslins/";
         String code = "kLPc8a";
-
-        ShortUrl shortUrl = new ShortUrl(originalUrl);
 
         given(repository.getStatisticsByCode(code)).willReturn(Optional.empty());
 
