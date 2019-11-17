@@ -7,11 +7,9 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
-@Document("url_shorten")
-public class UrlShorten {
+@Document("short_url")
+public class ShortUrl {
 
     private static final String BASE_URL = "http://localhost:8080/";
 
@@ -19,17 +17,16 @@ public class UrlShorten {
     private String id;
     @Indexed(unique = true)
     private String code;
-    private String shortLink;
+    private String shortUrl;
     private String originalUrl;
     @CreatedDate
     private LocalDateTime createdAt;
     private Long hitCount;
-    private List<RequestInfo> requests = new ArrayList<>();
 
-    public UrlShorten(String originalUrl) {
+    public ShortUrl(String originalUrl) {
         this.originalUrl = originalUrl;
         this.code = RandomShortCodeGenerator.generateCode();
-        this.shortLink = BASE_URL + code;
+        this.shortUrl = BASE_URL + code;
         this.hitCount = 0l;
     }
 
@@ -53,11 +50,7 @@ public class UrlShorten {
         return createdAt;
     }
 
-    public List<RequestInfo> getRequests() {
-        return requests;
-    }
-
-    public String getShortLink() {
-        return shortLink;
+    public String getShortUrl() {
+        return shortUrl;
     }
 }

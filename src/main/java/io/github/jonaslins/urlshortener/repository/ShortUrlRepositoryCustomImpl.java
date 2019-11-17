@@ -1,8 +1,7 @@
 package io.github.jonaslins.urlshortener.repository;
 
-import io.github.jonaslins.urlshortener.model.RequestInfo;
-import io.github.jonaslins.urlshortener.model.UrlShorten;
-import io.github.jonaslins.urlshortener.model.UrlShortenStatistics;
+import io.github.jonaslins.urlshortener.model.ShortUrl;
+import io.github.jonaslins.urlshortener.model.ShortUrlStatistics;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -17,35 +16,35 @@ import java.util.Optional;
 import static org.springframework.data.mongodb.core.aggregation.Aggregation.*;
 import static org.springframework.data.mongodb.core.query.Criteria.where;
 
-public class UrlShortenRepositoryCustomImpl implements UrlShortenRepositoryCustom {
+public class ShortUrlRepositoryCustomImpl implements ShortUrlRepositoryCustom {
 
     @Autowired
     private MongoTemplate mongoTemplate;
 
     @Override
-    public Optional<UrlShorten> findAndModifyByCode(String code, RequestInfo requestInfo) {
+    public Optional<ShortUrl> findAndIncrementHitCount(String code) {
         Query query = new Query(where("code").is(code));
-        Update update = new Update().inc("hitCount", 1).push("requests", requestInfo);
-        UrlShorten returned = mongoTemplate.findAndModify(query, update, UrlShorten.class);
+        Update update = new Update().inc("hitCount", 1);
+        ShortUrl returned = mongoTemplate.findAndModify(query, update, ShortUrl.class);
         return Optional.ofNullable(returned);
     }
 
-    public Optional<UrlShortenStatistics> getStatisticsByCode(String code) {
+    public Optional<ShortUrlStatistics> getStatisticsByCode(String code) {
         Aggregation agg = newAggregation(
                 match(where("code").is(code)), //
                 unwind("requests"),
                 group(fields("code")
-                        .and("shortLink")
+                        .and("shortUrl")
                         .and("hitCount")
                         .and("originalUrl")
                         .and("topUserAddress", "requests.IPAddress")).count().as("count")
                 ,sort(Sort.Direction.DESC, "count")
         );
 
-        AggregationResults<UrlShortenStatistics> aggregationResults = mongoTemplate.aggregate(
-                agg, UrlShorten.class, UrlShortenStatistics.class
+        AggregationResults<ShortUrlStatistics> aggregationResults = mongoTemplate.aggregate(
+                agg, ShortUrl.class, ShortUrlStatistics.class
         );
-        List<UrlShortenStatistics> results = aggregationResults.getMappedResults();
+        List<ShortUrlStatistics> results = aggregationResults.getMappedResults();
 
         if(results.isEmpty()){
             return Optional.empty();

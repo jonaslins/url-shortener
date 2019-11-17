@@ -1,14 +1,14 @@
 package io.github.jonaslins.urlshortener.model;
 
-public class UrlShortenStatistics {
+public class ShortUrlStatistics {
 
     private String originalUrl;
-    private String shortLink;
+    private String shortUrl;
     private String code;
     private Long hitCount;
     private String topUserAddress;
 
-    public UrlShortenStatistics() {
+    public ShortUrlStatistics() {
     }
 
     public String getOriginalUrl() {
@@ -35,8 +35,8 @@ public class UrlShortenStatistics {
         this.topUserAddress = topUserAddress;
     }
 
-    public String getShortLink() {
-        return shortLink;
+    public String getShortUrl() {
+        return shortUrl;
     }
 
     public String getCode() {

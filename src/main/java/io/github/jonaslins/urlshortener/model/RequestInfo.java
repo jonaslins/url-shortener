@@ -1,10 +1,20 @@
 package io.github.jonaslins.urlshortener.model;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.util.Assert;
+
+@Document("request_info")
 public class RequestInfo {
 
-    private String IPAddress;
+    @Id
+    private String id;
+    @Indexed
+    private String shortUrlCode;
+    private String ipAddress;
+    private String userAgent;
     private String referrer;
-    private String originalUserAgent;
     private String agentClass;
     private String agentName;
     private String agentVersion;
@@ -15,15 +25,33 @@ public class RequestInfo {
     private String deviceName;
     private String deviceBrand;
 
-    public RequestInfo() {
+    private RequestInfo(String shortUrlCode, String ipAddress, String userAgent) {
+        this.shortUrlCode = shortUrlCode;
+        this.ipAddress = ipAddress;
+        this.userAgent = userAgent;
     }
 
-    public String getIPAddress() {
-        return IPAddress;
+    public static RequestInfo of(String shortUrlCode, String ipAddress, String userAgent) {
+        Assert.hasText(shortUrlCode, "The shortUrlCode argument must have text; it must not be null, empty, or blank");
+        Assert.hasText(ipAddress, "The ipAddress argument must have text; it must not be null, empty, or blank");
+        Assert.hasText(userAgent, "The userAgent argument must have text; it must not be null, empty, or blank");
+        return new RequestInfo(shortUrlCode, ipAddress, userAgent);
     }
 
-    public void setIPAddress(String IPAddress) {
-        this.IPAddress = IPAddress;
+    public String getId() {
+        return id;
+    }
+
+    public String getShortUrlCode() {
+        return shortUrlCode;
+    }
+
+    public String getIpAddress() {
+        return ipAddress;
+    }
+
+    public String getUserAgent() {
+        return userAgent;
     }
 
     public String getReferrer() {
@@ -34,60 +62,52 @@ public class RequestInfo {
         this.referrer = referrer;
     }
 
-    public String getOriginalUserAgent() {
-        return originalUserAgent;
-    }
-
-    public void setOriginalUserAgent(String originalUserAgent) {
-        this.originalUserAgent = originalUserAgent;
+    public String getAgentClass() {
+        return agentClass;
     }
 
     public void setAgentClass(String agentClass) {
         this.agentClass = agentClass;
     }
 
-    public String getAgentClass() {
-        return agentClass;
+    public String getAgentName() {
+        return agentName;
     }
 
     public void setAgentName(String agentName) {
         this.agentName = agentName;
     }
 
-    public String getAgentName() {
-        return agentName;
+    public String getAgentVersion() {
+        return agentVersion;
     }
 
     public void setAgentVersion(String agentVersion) {
         this.agentVersion = agentVersion;
     }
 
-    public String getAgentVersion() {
-        return agentVersion;
+    public String getOperatingSystemClass() {
+        return operatingSystemClass;
     }
 
     public void setOperatingSystemClass(String operatingSystemClass) {
         this.operatingSystemClass = operatingSystemClass;
     }
 
-    public String getOperatingSystemClass() {
-        return operatingSystemClass;
+    public String getOperatingSystemName() {
+        return operatingSystemName;
     }
 
     public void setOperatingSystemName(String operatingSystemName) {
         this.operatingSystemName = operatingSystemName;
     }
 
-    public String getOperatingSystemName() {
-        return operatingSystemName;
+    public String getOperatingSystemVersion() {
+        return operatingSystemVersion;
     }
 
     public void setOperatingSystemVersion(String operatingSystemVersion) {
         this.operatingSystemVersion = operatingSystemVersion;
-    }
-
-    public String getOperatingSystemVersion() {
-        return operatingSystemVersion;
     }
 
     public String getDeviceClass() {
@@ -98,19 +118,19 @@ public class RequestInfo {
         this.deviceClass = deviceClass;
     }
 
-    public void setDeviceName(String deviceName) {
-        this.deviceName = deviceName;
-    }
-
     public String getDeviceName() {
         return deviceName;
     }
 
-    public void setDeviceBrand(String deviceBrand) {
-        this.deviceBrand = deviceBrand;
+    public void setDeviceName(String deviceName) {
+        this.deviceName = deviceName;
     }
 
     public String getDeviceBrand() {
         return deviceBrand;
+    }
+
+    public void setDeviceBrand(String deviceBrand) {
+        this.deviceBrand = deviceBrand;
     }
 }

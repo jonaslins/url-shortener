@@ -3,9 +3,8 @@ package io.github.jonaslins.urlshortener.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.jonaslins.urlshortener.controller.request.ShortenUrlRequest;
-import io.github.jonaslins.urlshortener.model.RequestInfo;
-import io.github.jonaslins.urlshortener.model.UrlShorten;
-import io.github.jonaslins.urlshortener.model.UrlShortenStatistics;
+import io.github.jonaslins.urlshortener.model.ShortUrl;
+import io.github.jonaslins.urlshortener.model.ShortUrlStatistics;
 import io.github.jonaslins.urlshortener.service.UrlShortenerService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -40,9 +39,9 @@ public class UrlShortenerControllerTest {
     public void shortenUrl() throws Exception {
         String originalUrl = "https://www.linkedin.com/in/jonaslins/";
 
-        UrlShorten urlShorten = new UrlShorten(originalUrl);
+        ShortUrl shortUrl = new ShortUrl(originalUrl);
 
-        given(service.shortenUrl(originalUrl)).willReturn(urlShorten);
+        given(service.shortenUrl(originalUrl)).willReturn(shortUrl);
 
         ShortenUrlRequest shortenUrlRequest = new ShortenUrlRequest(originalUrl);
 
@@ -67,7 +66,7 @@ public class UrlShortenerControllerTest {
         String code = "kLPc8a";
         String originalUrl = "https://www.linkedin.com/in/jonaslins/";
 
-        given(service.getOriginalUrlByCode(eq(code), any(RequestInfo.class))).willReturn(originalUrl);
+        given(service.getOriginalUrlByCode(eq(code), any(), any(), any())).willReturn(originalUrl);
 
         mvc.perform(get("/" + code)
                 .accept(MediaType.APPLICATION_JSON))
@@ -80,11 +79,11 @@ public class UrlShortenerControllerTest {
         String code = "kLPc8a";
         String originalUrl = "https://www.linkedin.com/in/jonaslins/";
 
-        UrlShortenStatistics urlShortenStatistics = new UrlShortenStatistics();
-        urlShortenStatistics.setHitCount(5l);
-        urlShortenStatistics.setOriginalUrl(originalUrl);
+        ShortUrlStatistics shortUrlStatistics = new ShortUrlStatistics();
+        shortUrlStatistics.setHitCount(5l);
+        shortUrlStatistics.setOriginalUrl(originalUrl);
 
-        given(service.getStatisticsByCode(code)).willReturn(urlShortenStatistics);
+        given(service.getStatisticsByCode(code)).willReturn(shortUrlStatistics);
 
         mvc.perform(get("/" + code + "/statistics")
                 .accept(MediaType.APPLICATION_JSON))
