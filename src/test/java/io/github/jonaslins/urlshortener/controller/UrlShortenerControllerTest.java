@@ -55,6 +55,20 @@ public class UrlShortenerControllerTest {
                 .andExpect(jsonPath("$.originalUrl", is("https://www.linkedin.com/in/jonaslins/")));
     }
 
+    @Test
+    public void shouldReturnBadRequest() throws Exception {
+        mvc.perform(post("/")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{ \"invalid_field\": \"a field\"}"))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void shouldReturnBadRequestWithEmptyPost() throws Exception {
+        mvc.perform(post("/"))
+                .andExpect(status().isBadRequest());
+    }
+
     private String toJson(Object object) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
         return objectMapper.writeValueAsString(object);

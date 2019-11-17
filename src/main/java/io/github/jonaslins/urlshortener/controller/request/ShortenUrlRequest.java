@@ -1,6 +1,10 @@
 package io.github.jonaslins.urlshortener.controller.request;
 
+import javax.validation.constraints.NotBlank;
+
 public class ShortenUrlRequest {
+
+    @NotBlank
     private String originalUrl;
 
     private ShortenUrlRequest(){

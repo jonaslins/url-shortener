@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
 
@@ -25,7 +26,7 @@ public class UrlShortenerController {
     private UrlShortenerService urlShortenerService;
 
     @PostMapping("/")
-    public ShortUrl shortenUrl(@RequestBody ShortenUrlRequest shortenUrlRequest) {
+    public ShortUrl shortenUrl(@RequestBody @Valid ShortenUrlRequest shortenUrlRequest) {
         return urlShortenerService.shortenUrl(shortenUrlRequest.getOriginalUrl());
     }
 
