@@ -11,13 +11,10 @@ import java.time.LocalDateTime;
 @Document("short_url")
 public class ShortUrl {
 
-    private static final String BASE_URL = "http://localhost:8080/";
-
     @Id
     private String id;
     @Indexed(unique = true)
     private String code;
-    private String shortUrl;
     private String originalUrl;
     @CreatedDate
     private LocalDateTime createdAt;
@@ -26,8 +23,7 @@ public class ShortUrl {
     public ShortUrl(String originalUrl) {
         this.originalUrl = originalUrl;
         this.code = RandomShortCodeGenerator.generateCode();
-        this.shortUrl = BASE_URL + code;
-        this.hitCount = 0l;
+        this.hitCount = Long.valueOf(0);
     }
 
     public String getOriginalUrl() {
@@ -50,7 +46,4 @@ public class ShortUrl {
         return createdAt;
     }
 
-    public String getShortUrl() {
-        return shortUrl;
-    }
 }
